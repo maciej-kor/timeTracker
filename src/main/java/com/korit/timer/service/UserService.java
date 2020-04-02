@@ -21,6 +21,4 @@ public interface UserService {
 
     ResponseEntity<User> getUser(Long id);
 
-
-
 }

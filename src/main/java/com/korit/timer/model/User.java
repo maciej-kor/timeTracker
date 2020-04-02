@@ -1,11 +1,14 @@
 package com.korit.timer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"employeeSet"})
 public class User extends BaseEntity {
 
     private String name;
@@ -18,10 +21,13 @@ public class User extends BaseEntity {
 
     private String mailAddress;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Employee> employeeSet = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Employee> employeeSet;
 
     public Set<Employee> getEmployeeSet() {
+        if (employeeSet == null){
+            employeeSet = new HashSet<>();
+        }
         return employeeSet;
     }
 
@@ -67,6 +73,11 @@ public class User extends BaseEntity {
 
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
+    }
+
+    public void addEmployee(Employee employee){
+        getEmployeeSet().add(employee);
+        employee.setUser(this);
     }
 
 

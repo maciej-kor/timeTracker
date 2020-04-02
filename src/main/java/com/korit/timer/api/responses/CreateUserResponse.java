@@ -9,7 +9,6 @@ public class CreateUserResponse extends BasicResponse {
     public CreateUserResponse(String responseMsg, Long userId) {
         super(responseMsg);
         this.userId = userId;
-
     }
 
     public Long getUserId() {
@@ -19,4 +18,5 @@ public class CreateUserResponse extends BasicResponse {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
 }
